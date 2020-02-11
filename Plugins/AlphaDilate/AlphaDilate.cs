@@ -5,24 +5,24 @@ using UnityEngine;
 // When attached to a camera, this script dilates the colors of opaque pixels to cover partially opaque areas caused by anti aliasing.
 public class AlphaDilate : MonoBehaviour
 {
-    private Camera camera;
+    private Camera cam;
     private Material dilateMaterial;
     private RenderTexture temp1;
     private RenderTexture temp2;
     
     public void Start()
     {
-        if (camera == null) {
-            camera = GetComponent<Camera>();
+        if (cam == null) {
+            cam = GetComponent<Camera>();
         }
-        if (camera == null)
+        if (cam == null)
             return;
         
         dilateMaterial = new Material(Shader.Find("Custom/AlphaDilate"));
     }
     
     public void OnRenderImage(RenderTexture source, RenderTexture destination) {
-        if (camera == null)
+        if (cam == null)
             return;
         if (temp1 == null)
             temp1 = RenderTexture.GetTemporary(source.descriptor); 

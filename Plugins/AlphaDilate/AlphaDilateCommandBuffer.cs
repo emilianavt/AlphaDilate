@@ -7,16 +7,16 @@ using UnityEngine.Rendering;
 [ExecuteInEditMode()]
 public class AlphaDilateCommandBuffer : MonoBehaviour
 {
-    private Camera camera;
+    private Camera cam;
     private Material dilateMaterial;
     static private CommandBuffer commandBuffer = null;
     
     public void Start()
     {
-        if (camera == null) {
-            camera = GetComponent<Camera>();
+        if (cam == null) {
+            cam = GetComponent<Camera>();
         }
-        if (camera == null)
+        if (cam == null)
             return;
         if (commandBuffer != null)
             return;
@@ -46,41 +46,41 @@ public class AlphaDilateCommandBuffer : MonoBehaviour
     }
     
     public void OnEnable() {
-        if (camera == null)
+        if (cam == null)
             return;
         if (commandBuffer == null)
             Start();
-        CommandBuffer[] buffers = camera.GetCommandBuffers(CameraEvent.AfterImageEffects);
+        CommandBuffer[] buffers = cam.GetCommandBuffers(CameraEvent.AfterImageEffects);
         bool found = false;
         foreach (CommandBuffer buffer in buffers) {
             if (buffer.name == commandBuffer.name)
                 found = true;
         }
         if (!found)
-            camera.AddCommandBuffer(CameraEvent.AfterImageEffects, commandBuffer);
+            cam.AddCommandBuffer(CameraEvent.AfterImageEffects, commandBuffer);
     }
     
     public void OnDisable() {
-        if (camera == null)
+        if (cam == null)
             return;
         if (commandBuffer == null)
             Start();
-        CommandBuffer[] buffers = camera.GetCommandBuffers(CameraEvent.AfterImageEffects);
+        CommandBuffer[] buffers = cam.GetCommandBuffers(CameraEvent.AfterImageEffects);
         bool found = false;
         foreach (CommandBuffer buffer in buffers) {
             if (buffer.name == commandBuffer.name)
                 found = true;
         }
         if (found)
-            camera.RemoveCommandBuffer(CameraEvent.AfterImageEffects, commandBuffer);
+            cam.RemoveCommandBuffer(CameraEvent.AfterImageEffects, commandBuffer);
     }
     
     public void Update() {
-        if (camera == null)
+        if (cam == null)
             return;
         if (commandBuffer == null)
             Start();
-        CommandBuffer[] buffers = camera.GetCommandBuffers(CameraEvent.AfterImageEffects);
+        CommandBuffer[] buffers = cam.GetCommandBuffers(CameraEvent.AfterImageEffects);
         if (buffers.Length >= 1) {
             if (buffers[buffers.Length - 1].name != commandBuffer.name) {
                 OnDisable();
