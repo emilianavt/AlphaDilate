@@ -1,5 +1,7 @@
 # AlphaDilate
 
+**Note**: This approach has various limitations and should probably only used very carefully or not at all. If premultiplied alpha compositing is used (e.g. via the OBS Spout2 plugin), rendering with a black clear color should also solve this issue.
+
 The "Game Capture" function of [OBS](https://obsproject.com/) allows you to directly capture transparency rendered to the screen by applications. This can be useful when rendering an animated avatar without having to use chroma or color keying, which can lead to errors, when the avatar's colors coincide with the keyed color. Alpha transparency also allows for the inclusion of partially transparent objects in the capture.
 
 One possible way to output such objects with transparent backgrounds in Unity is to set up a camera with a background color that has the alpha value set to 0 and "Clear Flags" set to "Solid Color".
